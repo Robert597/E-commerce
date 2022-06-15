@@ -8,7 +8,15 @@ const bannerSchema = mongoose.Schema({
     small: {
         type: String,
         default: "SALE"
-    }
+    },
+    name: String,
+    details: String,
+    price: Number,
+    image: [String],
+    footerLarge: String,
+    footerlarge: String,
+    discount: Number,
+    saleTime: String,
 })
 
 const bannerModel = mongoose.model('Banner', bannerSchema);

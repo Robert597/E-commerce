@@ -1,33 +1,28 @@
 import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import BannerImg from "../public/earphones_a_1.webp";
+import { useStateContext } from '../Context/datacontext';
 
-const HeroBanner = () => {
+const HeroBanner = ({banner}) => {
+   const {sendBannerProduct} = useStateContext();
   return (
     <div className='hero-banner-container'>
         <div>
             <p className='beats-solo'>
-                SMALL TEXT
+            {banner[0]?.name} 
             </p>
-            <h3>MID TEXT</h3>
-            <div className='hero-banner-image'>
-            <Image 
-        src={BannerImg}
-        alt="Picture of the author"
-        // width={500} automatically provided
-        // height={500} automatically provided
-        // blurDataURL="data:..." automatically provided
-        // placeholder="blur" // Optional blur-up while loading
-      />
-      </div>
+            <h3>{banner[0]?.Large}</h3>
+            <h1>{banner[0]?.small}</h1>
+        
+                   <img src={banner[0]?.image[0]}    alt="Picture of the products" 
+                   className='hero-banner-image'/>
+      
+           
             <div>
-                <Link href={"/product/ID"}>
-                    <button type='button'>BUTTON TEXT </button>
-                </Link>
+                <div onClick={() => {sendBannerProduct(banner[0])}}>
+                    <button type='button'>Buy Now </button>
+                </div>
                 <div className='desc'>
                     <h5>Description</h5>
-                    <p>DEscription</p> 
+                    <p>{banner[0]?.details} </p> 
                 </div>
             </div>
         </div>

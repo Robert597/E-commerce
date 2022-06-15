@@ -10,14 +10,20 @@
   },
   "dependencies": {
     "@stripe/stripe-js": "^1.29.0",
+    "axios": "^0.27.2",
     "canvas-confetti": "^1.5.1",
+    "dotenv": "^16.0.1",
     "firebase": "^9.8.2",
     "gsap": "^3.10.4",
     "next": "12.1.6",
+    "paystack": "^2.0.1",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-hot-toast": "^2.2.0",
     "react-icons": "^4.3.1",
+    "react-paystack": "^3.0.5",
+    "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1",
     "stripe": "^8.220.0"
   },
   "devDependencies": {
