@@ -3,8 +3,10 @@ import { getDownloadURL, ref,  uploadBytesResumable } from 'firebase/storage';
 import { storage } from '../firebase';
 import * as Api from "../API/index"
 import { useStateContext } from '../Context/datacontext';
+import { useRouter } from 'next/router';
 
 const Form = () => {
+   const router = useRouter();
     const [banner, setBanner] = useState(false);
     const [imageFile, setImageFile] = useState([]); 
     const [imageFiles, setImageFiles] = useState([]); 
@@ -62,7 +64,8 @@ const handleProductSubmit = async ( event) => {
     image.push(url);
     }
     const { data } = await Api.createPosts("/products", {...productData, image});
-    setProductDatas([...productDatas, data]);
+
+    setProductDatas([ data.newProduct,...productDatas]);
     setProductData(
       {
         name: "",
@@ -70,6 +73,7 @@ const handleProductSubmit = async ( event) => {
         details: ""
        }
     )
+    router.push('/');
   }catch(err){
     console.log(err);
   }
@@ -88,6 +92,7 @@ const handleBannerSubmit = async (event) => {
       }
       const { data } = await Api.updatePosts(`/products/banner/${bannerDatas[0]._id}`, {...bannerData, image});
       setBannerDatas([data]);
+
     }else{
      
       const { data } = await Api.updatePosts(`/products/banner/${bannerDatas[0]._id}`, {...bannerData, image: imageUrl});
@@ -105,18 +110,21 @@ const handleBannerSubmit = async (event) => {
         discount: 0,
         saleTime: ""
       });
+    router.push('/');
+
 }catch(err){
     console.log(err);
   }
 }
 
   return (
-    <div>
+    <div className="probanner">
      { !loading && (<>
         {
             !banner && (
               <>
                 <form autoComplete='off' noValidate className='productFormContainer' onSubmit={(event) => handleProductSubmit( event)}>
+                  <h1>Add a new product</h1>
                     <input type="text" required placeholder='Name'value={productData.name}
                     onChange={ (e) => setProductData({...productData, name : e.target.value})}/>
                     <input type="number" required placeholder='Price'
@@ -131,8 +139,8 @@ const handleBannerSubmit = async (event) => {
                      onChange={ (e) => setProductData({...productData,details : e.target.value})}
                      required></textarea>
                     <button type='submit'>Submit</button>
+                    <p>Edit Banner<span onClick={() => {setBanner(true)}} style={{cursor: "pointer"}}>Click Here</span></p>
                 </form>
-                 <p>Edit Banner<span onClick={() => {setBanner(true)}}>Click Here</span></p>
                  </>
             )
         }
@@ -141,6 +149,7 @@ const handleBannerSubmit = async (event) => {
           <form className='bannerFormContainer'
           autoComplete='off' noValidate 
           onSubmit={(event) => handleBannerSubmit(event)}>
+             <h1>Editing Banner</h1>
              <input type="text" placeholder='Big Text' 
              value={bannerData.Large}
               onChange={(e) => {
@@ -190,8 +199,8 @@ const handleBannerSubmit = async (event) => {
                      onChange={(e) => setImageFiles(e.target.files)} multiple
                    />
                     <button type="submit">Submit</button>
+                    <p>Add a new Product <span onClick={() => {setBanner(false)}} style={{cursor: "pointer"}}>Click Here</span></p>
           </form>
-           <p>Add a new Product <span onClick={() => {setBanner(false)}} style={{cursor: "pointer"}}>Click Here</span></p>
            </>
         )}
         </>

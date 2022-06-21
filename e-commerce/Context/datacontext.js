@@ -7,6 +7,8 @@ import { useRouter } from 'next/router';
 
 export const DataProvider = ({children}) => {
     const router = useRouter();
+    const [Error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const [productDatas, setProductDatas] = useState([]);
     const [bannerDatas, setBannerDatas] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -15,6 +17,9 @@ export const DataProvider = ({children}) => {
     const [totalPrice, setTotalPrice] = useState(0);
     const[totalQuantities, setTotalQuantities] = useState(0);
     const[qty, setQty] = useState(1);
+    const [userLoggedIn, setUserLoggedIn] = useState(false);
+    const [user, setUser] = useState({});
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -54,6 +59,41 @@ export const DataProvider = ({children}) => {
        
     }, [])
     
+ const validatePassword = (psw) => 
+{
+switch (true) {
+  case  (psw.length < 8 || psw.length > 13):
+   setError(true);
+   setErrorMessage("bad password length")
+    break
+    case (psw == psw.toLowerCase()) || (psw == psw.toUpperCase()):
+        setError(true);
+        setErrorMessage("password must contain upper and lowercase letters");
+    break
+  case  (!(/[0-9]/.test(psw))):
+    setError(true);
+   setErrorMessage("password must contain numbers");
+    break
+    default: 
+    setError(false);
+    setErrorMessage("");
+}
+}
+
+ const validateEmail = (email) => {
+    let result = 
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+      ;
+      switch(true){
+        case (result === false): 
+        setError(true);
+        setErrorMessage("Invalid Email Address");
+        break;
+        case (result === true): 
+        setError(false);
+        setErrorMessage("");
+      }
+  };
 
     const incQty = () => {
         setQty((prevqty) => prevqty + 1);
@@ -133,7 +173,12 @@ export const DataProvider = ({children}) => {
         localStorage.setItem("product", JSON.stringify(product));
         router.push(`/product/${product._id}`);
     }
-    return <DataContext.Provider value={{ loading, productDatas, bannerDatas, setBannerDatas, setProductDatas, setLoading, showCart, cartItems, totalPrice, totalQuantities, qty, setCartItems, setShowCart, setTotalPrice, setTotalQuantities, setQty, incQty, decQty, onAdd, toggleCartItemQuantity, onRemove, setPaymentDetail, paymentDetail, product, setProduct, filterProducts, sendBannerProduct}}>
+    
+const logout = () => {
+    localStorage.removeItem("profile");
+    setUser({});
+}
+    return <DataContext.Provider value={{ loading, productDatas, bannerDatas, setBannerDatas, setProductDatas, setLoading, showCart, cartItems, totalPrice, totalQuantities, qty, setCartItems, setShowCart, setTotalPrice, setTotalQuantities, setQty, incQty, decQty, onAdd, toggleCartItemQuantity, onRemove, setPaymentDetail, paymentDetail, product, setProduct, filterProducts, sendBannerProduct,Error, setError, setErrorMessage, errorMessage, validateEmail, validatePassword,userLoggedIn, setUserLoggedIn, user, setUser,logout}}>
         {children}
     </DataContext.Provider>
 }

@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import mongoose from 'mongoose';
 import connectDB from "./connectDB.js";
 import router from "./Routes/product.js";
+import authRouter from './Routes/auth.js';
 
 dotenv.config();  
 connectDB();
@@ -19,6 +20,8 @@ const port = process.env.PORT || 5500
 app.get('/', (req, res) => {
     res.send("app is running");
 })
+app.use('/auth', authRouter);
+
 app.use('/products', router);
 
 mongoose.connection.once("open", () => {

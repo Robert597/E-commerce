@@ -1,13 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Link from 'next/link';
 import { AiOutlineShopping, AiOutlinePlus } from 'react-icons/ai';
 import Cart from './Cart';
 import { useStateContext } from '../Context/datacontext';
+import { useRouter } from 'next/router';
 
 
 
 const Navbar = () => {
-  const {showCart, setShowCart, totalQuantities} = useStateContext();
+  const router = useRouter();
+  const {showCart, setShowCart, totalQuantities, user, setUser} = useStateContext();
+  useEffect(() => {
+    const token = user?.token;
+
+    setUser(JSON.parse(localStorage.getItem("profile")));
+  }, [router.query.slug])
+  console.log(user);
   return (
     <div className='navbar-container'>
       <p className='logo'>
