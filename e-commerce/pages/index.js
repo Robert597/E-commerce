@@ -6,14 +6,15 @@ import decode from "jwt-decode"
 
 const Home = () => {
   const router = useRouter();
-  const {productDatas, bannerDatas, user, setUser, logout} = useStateContext();
+  const {productDatas, bannerDatas, user, setUser, logout, theme} = useStateContext();
   const [number, setNumber] = useState(Math.floor(Math.random() * ((productDatas.length-1) - 0 + 1)) + 0);
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("profile")));
-
+    
+    
     const getToken = JSON.parse(localStorage.getItem("profile"));
-    const token = getToken.token;
+    const token = getToken?.token;
 
     if(token){
       const decodedToken = decode(token);
@@ -21,12 +22,11 @@ const Home = () => {
       if(decodedToken.exp *1000 < new Date().getTime()) return logout()
   }
   }, [router.query.slug])
+
   return (
     <>
-    <p onClick={() => router.push('/auth')}>move to auth</p>
-    <p>{user?.result?.name}</p>
     <HeroBanner banner={bannerDatas}/>
-    <div className='products-heading'>
+    <div className={theme ? "products-heading-dark": "products-heading"}>
       <h2>Best Selling Products</h2>
       <p>Speakers of many variations</p>
     </div>

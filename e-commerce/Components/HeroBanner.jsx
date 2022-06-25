@@ -2,9 +2,9 @@ import React from 'react';
 import { useStateContext } from '../Context/datacontext';
 
 const HeroBanner = ({banner}) => {
-   const {sendBannerProduct} = useStateContext();
+   const {sendBannerProduct, theme} = useStateContext();
   return (
-    <div className='hero-banner-container'>
+    <div className={theme ? "hero-banner-container-dark": "hero-banner-container"}>
         <div>
             <p className='beats-solo'>
             {banner[0]?.name} 

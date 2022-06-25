@@ -23,11 +23,16 @@ const authSchema =  new Schema({
     frontEndRoles: {
         type: [String],
         required: true,
-        default: ["user"]
+        default: ["user"] 
     },
     password: {
         type: String,
         required: true
+    },
+    image: {
+        type: String,
+        required: true,
+        default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSissgD_ffoqokwXW3qC_-9In_v2iuRr44lqd0gxumxoR5IW1LxXIndugp5WDofIgOEuoI&usqp=CAU"
     }
 })
 export const authModel = mongoose.model('User', authSchema);

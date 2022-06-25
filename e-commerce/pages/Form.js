@@ -4,13 +4,14 @@ import { storage } from '../firebase';
 import * as Api from "../API/index"
 import { useStateContext } from '../Context/datacontext';
 import { useRouter } from 'next/router';
+import Link from "next/link";
 
 const Form = () => {
    const router = useRouter();
     const [banner, setBanner] = useState(false);
     const [imageFile, setImageFile] = useState([]); 
     const [imageFiles, setImageFiles] = useState([]); 
-    const {productDatas, setProductDatas, bannerDatas, setBannerDatas, loading} = useStateContext();
+    const {productDatas, setProductDatas, bannerDatas, setBannerDatas, loading, user} = useStateContext();
     const[imageUrl, setImageUrl] = useState(bannerDatas[0]?.image);
     const [productData, setProductData] = useState(
       {
@@ -75,7 +76,7 @@ const handleProductSubmit = async ( event) => {
     )
     router.push('/');
   }catch(err){
-    console.log(err);
+    console.log(err.response.data);
   }
 }
 
@@ -119,7 +120,15 @@ const handleBannerSubmit = async (event) => {
 
   return (
     <div className="probanner">
-     { !loading && (<>
+      {!loading && !user?.result?.frontEndRoles?.includes("Admin") && (
+        <div className='not'>
+          <p><span>Oops!</span> only an Admin is allowed to add new products to the market.</p>
+          <Link href="/">
+            Continue Shopping
+          </Link>
+        </div>
+      )}
+     { !loading && user?.result?.frontEndRoles?.includes("Admin") && (<>
         {
             !banner && (
               <>

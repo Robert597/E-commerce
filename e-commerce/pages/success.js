@@ -6,16 +6,32 @@ import { useStateContext } from '../Context/datacontext';
 import { runFireworks } from '../lib/util';
 
 const Success = () => {
-    const {setCartItems, setTotalPrice, setTotalQuantities} = useStateContext();
-
+    const {setCartItems, setTotalPrice, setTotalQuantities, successPayment, setSuccessPayment, setPaymentDetail} = useStateContext();
+    const router = useRouter();
     useEffect(() => {
-        localStorage.clear();
+        if(!successPayment){
+            router.push("/");
+        }else{
+        let items = ["cart", "product", "totalQuantities", "totalPrice"]
+        items.forEach(k => localStorage.removeItem(k));
         setCartItems([]);
         setTotalPrice(0);
         setTotalQuantities(0);
+        setPaymentDetail(
+            {
+              Amount: 0,
+              item: []
+             }
+          );
         runFireworks();
+        }
     }, [])
   return (
+    <>
+    {!successPayment && (
+        <p>Redirecting...</p>
+    )}
+    {successPayment && (
     <div className='success-wrapper'>
         <div className='success'>
             <p className='icon'>
@@ -30,12 +46,14 @@ const Success = () => {
                 </a>
                 </p>
                 <Link href="/">
-                    <button type="button" width="300px" className="btn">
+                    <button type="button" width="300px" className="btn" onClick={() => setSuccessPayment(false)}>
                         Continue Shopping
                         </button>
                 </Link>
         </div>
     </div>
+    )}
+    </>
   )
 }
 

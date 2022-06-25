@@ -10,7 +10,6 @@ const ProductDetails = () => {
     const {productDatas, setPaymentDetail, decQty, incQty, qty, onAdd, product} = useStateContext();
     const[index, setIndex] = useState(0);
   
-
   return (
     <div>
         <div className='product-detail-container'>

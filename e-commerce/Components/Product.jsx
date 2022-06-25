@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { useStateContext } from '../Context/datacontext';
 
 const Product = ({product}) => {
-  const {filterProducts} = useStateContext();
+  const {filterProducts, theme} = useStateContext();
   return (
-    <div className="product">
+    <div className={theme ? "product-dark" : "product"}>
       <div onClick={() => {{filterProducts(product?._id)}}}>
           <div className='product-card'>
             <img src={product?.image[0]} alt="Picture of the products" 

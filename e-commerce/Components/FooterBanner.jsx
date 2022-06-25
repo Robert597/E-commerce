@@ -3,11 +3,11 @@ import React, {useEffect, useState} from 'react'
 import { useStateContext } from '../Context/datacontext';
 
 const FooterBanner = ({product}) => {
-  const {filterProducts,  bannerDatas} = useStateContext();
+  const {filterProducts,  bannerDatas, theme} = useStateContext();
   
   
   return (
-    <div className='footer-banner-container'>
+    <div className={theme ? "footer-banner-container-dark" : "footer-banner-container"}>
       <div className='banner-desc'>
         <div className='left'>
           <p>{bannerDatas[0]?.discount}% off</p>

@@ -16,7 +16,7 @@
         }
         next();
     }catch(err){
-        res.sendStatus(400);
+        return res.status(400).json({message: err});
     }
 }
 export default auth;

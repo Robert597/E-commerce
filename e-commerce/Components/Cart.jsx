@@ -4,25 +4,24 @@ import {AiOutlineMinus, AiOutlinePlus, AiOutlineLeft, AiOutlineShopping} from 'r
 import {TiDeleteOutline} from "react-icons/ti";
 import { useRouter } from 'next/router';
 import { useStateContext } from '../Context/datacontext';
-
+import {FiLogOut, FiLogIn} from 'react-icons/fi';
 
 const Cart = () => {
-    const cartRef = useRef();
     const router = useRouter();
-    const {totalPrice, totalQuantities, cartItems, setShowCart, setPaymentDetail, toggleCartItemQuantity, onRemove} = useStateContext();
+    const {totalPrice, totalQuantities, cartItems, setShowCart, setPaymentDetail, toggleCartItemQuantity, onRemove, user, logout, theme} = useStateContext();
 
   return (
-    <div className="cart-wrapper" ref={cartRef}>
+    <div className="cart-wrapper">
     <div className="cart-container">
       <button
       type="button"
       className="cart-heading"
       onClick={() => setShowCart(false)}>
         <AiOutlineLeft />
-        <span className="heading">Your Cart</span>
+        <span className="heading">{user?.result ? `${user?.result?.name.split(" ")[0]}'s cart` : "Your cart"}</span>
         <span className="cart-num-items">({totalQuantities} items)</span>
       </button>
-
+    
       {cartItems.length < 1 && (
         <div className="empty-cart">
           <AiOutlineShopping size={150} />
@@ -74,7 +73,7 @@ const Cart = () => {
         <div className="cart-bottom">
           <div className="total">
             <h3>Subtotal:</h3>
-            <h3>${totalPrice}</h3>
+            <h3>&#8358;{totalPrice}</h3>
           </div>
           <div className="btn-container">
             <button type="button" className="btn" onClick={()=> {
@@ -87,11 +86,29 @@ const Cart = () => {
               router.push("/payment");
               setShowCart(false);
             }}>
-              Pay with Paystack
+              click to pay
             </button>
           </div>
         </div>
       )}
+      <button
+              type="button"
+              className="logBtn"
+            >
+              {user?.result ? (
+                <div onClick={() => {logout();
+                setShowCart(false)}}> 
+                <p>Logout</p>
+                <FiLogOut/>
+                </div>
+              ) : (
+                <div onClick={() => {router.push('/auth')
+                setShowCart(false)}}>
+                <p>Login</p>
+                <FiLogIn/> 
+                </div>
+              )}
+            </button>
     </div>
   </div>
   )

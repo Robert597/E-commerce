@@ -10,7 +10,11 @@ function MyApp ({ Component, pageProps }) {
   return (
     <DataProvider>
       <Layout>
-        <Toaster/>
+        <Toaster
+      toastOptions={{
+        className: 'toaster'
+      }}
+        />
   <Component {...pageProps}/>
   </Layout>
   </DataProvider>

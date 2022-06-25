@@ -7,7 +7,7 @@ return async (req, res, next) => {
        return  rolesArray.includes(role);
     }).find(val => val === true);
     
-    if(!result) return res.sendStatus(401);
+    if(!result) return res.status(401).json({error: "unauthorized"});
     next();
 }
 }

@@ -1,12 +1,23 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { PaystackButton } from "react-paystack";
 import { useStateContext } from "../Context/datacontext";
+import { useRouter } from "next/router";
+import {toast} from "react-hot-toast";
 
 const Payment = () => {
-    const {paymentDetail, setPaymentDetail} = useStateContext();
-    console.log(paymentDetail);
+  const router = useRouter();
+    const {paymentDetail, setPaymentDetail, setSuccessPayment} = useStateContext();
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+    if(!paymentDetail?.items?.length){
+      router.push("/");
+    }else{
+      setLoading(false);
+    }
+    }, []);
+    
   const publicKey = 'pk_live_1b5845f3a7690307f4c06e0f1770993cb967b68e'
-  const amount = paymentDetail.Amount
+  const amount = paymentDetail?.Amount
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -20,18 +31,27 @@ const Payment = () => {
     publicKey,
     text: "Pay Now",
     onSuccess: () =>
-      alert("Thanks for doing business with us! Come back soon!!"),
-    onClose: () => alert("Wait! Don't leave :("),
+   {
+    toast.success("purchase was succesful");
+   
+    setSuccessPayment(true);
+    router.push("/success");
+   },
+    onClose: () => toast.error("don't leave :)"),
   }
 
-  console.log(process.env.REACT_APP_PUBLIC_KEY);
+  
   return (
     <div className="App">
+      {loading && (
+        <p>loading...</p>
+      )}
+      {!loading && (
       <div className="container">
         <div className="item">
           <img />
           <div className="item-details">
-            {paymentDetail.items[0].map((name) => (
+            {paymentDetail?.items[0]?.map((name) => (
                 <p>{name}</p>
             ))}
             <p>Total Amount: &#8358;{amount/100}</p>
@@ -61,6 +81,7 @@ const Payment = () => {
           <PaystackButton {...componentProps} />
         </div>
       </div>
+      )}
     </div>
   )
 }

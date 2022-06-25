@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 
 export const handleSignUp = async (req, res) => {
     try{
-    const {firstName, lastName, email, password} = req.body
+    const {firstName, lastName, email, password, image} = req.body
     if(!req.body) return res.status(400).json({message: "Missing Credentials"});
 //checking if user already exists in our database
 let userExist = await authModel.findOne({email});
@@ -20,7 +20,8 @@ const result = await authModel.create({
         user: 2001
     },
     email,
-    password: hashPwd
+    password: hashPwd,
+    image
 })
  //get roles of user
  const roles = Object.values(result.roles);

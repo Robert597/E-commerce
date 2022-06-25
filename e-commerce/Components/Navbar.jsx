@@ -1,39 +1,76 @@
 import React, {useEffect} from 'react';
 import Link from 'next/link';
-import { AiOutlineShopping, AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlineShopping, AiOutlineAppstoreAdd} from 'react-icons/ai';
+import {FaMoon, FaSun}from "react-icons/fa";
 import Cart from './Cart';
 import { useStateContext } from '../Context/datacontext';
 import { useRouter } from 'next/router';
 
 
 
+
 const Navbar = () => {
   const router = useRouter();
-  const {showCart, setShowCart, totalQuantities, user, setUser} = useStateContext();
-  useEffect(() => {
-    const token = user?.token;
+  const {showCart, setShowCart, totalQuantities, user, setUser, theme, setTheme} = useStateContext();
+ let defaultUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSissgD_ffoqokwXW3qC_-9In_v2iuRr44lqd0gxumxoR5IW1LxXIndugp5WDofIgOEuoI&usqp=CAU"
 
-    setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [router.query.slug])
-  console.log(user);
+ const handleTheme = (event) => {
+  event.target.checked ? setTheme(false) : setTheme(true);
+ }
   return (
     <div className='navbar-container'>
-      <p className='logo'>
-       <Link href="/">
-        ROBERT
-       </Link>
+      <p className={theme ? "navdark" : "navlight" }>
+       <span>R</span>
+       <span className='logounique'>0</span>
+       <span>B</span>
+       <span>.</span>
       </p>
-<div>
 
-<Link href="/Form">
-          <AiOutlinePlus className="cart-icon"/>
-  </Link>
   
-      <button type='button' className='cart-icon' onClick={() => setShowCart(true)}>
+
+
+<div className='cart-icons'>
+
+
+
+<button type="button" className={theme ? "cart-add-dark": "cart-add-light"} onClick={() => router.push("/Form")}>
+<AiOutlineAppstoreAdd />
+</button>
+         
+
+
+  {user?.result?.name && (
+    <div className={theme ? "cart-profile-dark" : "cart-profilee"}>
+      <div className='cart-imagee cart-icon'>
+        <img src={ user?.result?.image || defaultUrl} alt="user"/>
+      </div>
+      <p className={theme ? "cart-namee-dark" : "cart-namee-light"}>{user?.result?.name.split(" ")[0]}</p>
+    </div>
+  )}
+  {
+    !user?.result?.name && (
+      <p className={theme ? "cart-login-dark" : "cart-login"}>
+        <Link href="/auth">
+        Sign In
+        </Link>
+      </p>
+    )
+  }
+  <div>
+  <input type="checkbox" className='checkbox' id="checkbox" onChange={(e) => handleTheme(e)} />
+  <label htmlFor='checkbox' className={theme ? "label labeldark" : "label"}>
+    <FaSun className='sun'/>
+    <FaMoon className='moon'/>
+    <div className={theme ? "ball balldark" : "ball"}></div>
+  </label>
+</div>
+  
+      <button type='button' className={theme ? "cart-icon-dark" : "cart-icon"} onClick={() => setShowCart(true)}>
         <AiOutlineShopping/>
         <span className='cart-item-qty'>{totalQuantities}</span>
         </button>
-  </div>
+ 
+        </div>
   {showCart && (
     <Cart/>
   )}

@@ -159,6 +159,7 @@ switch (true) {
     Amount: 0,
     item: []
    })
+   const [successPayment, setSuccessPayment] = useState(false);
     const [product, setProduct] = useState({});
     const filterProducts = async (id) => {
         let returnProducts = await productDatas.filter(product => product._id === id);
@@ -178,7 +179,8 @@ const logout = () => {
     localStorage.removeItem("profile");
     setUser({});
 }
-    return <DataContext.Provider value={{ loading, productDatas, bannerDatas, setBannerDatas, setProductDatas, setLoading, showCart, cartItems, totalPrice, totalQuantities, qty, setCartItems, setShowCart, setTotalPrice, setTotalQuantities, setQty, incQty, decQty, onAdd, toggleCartItemQuantity, onRemove, setPaymentDetail, paymentDetail, product, setProduct, filterProducts, sendBannerProduct,Error, setError, setErrorMessage, errorMessage, validateEmail, validatePassword,userLoggedIn, setUserLoggedIn, user, setUser,logout}}>
+const [theme, setTheme] = useState(true);
+    return <DataContext.Provider value={{ loading, productDatas, bannerDatas, setBannerDatas, setProductDatas, setLoading, showCart, cartItems, totalPrice, totalQuantities, qty, setCartItems, setShowCart, setTotalPrice, setTotalQuantities, setQty, incQty, decQty, onAdd, toggleCartItemQuantity, onRemove, setPaymentDetail, paymentDetail, product, setProduct, filterProducts, sendBannerProduct,Error, setError, setErrorMessage, errorMessage, validateEmail, validatePassword,userLoggedIn, setUserLoggedIn, user, setUser,logout, successPayment, setSuccessPayment, theme, setTheme}}>
         {children}
     </DataContext.Provider>
 }
