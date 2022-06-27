@@ -11,3 +11,4 @@ Api.interceptors.request.use((req) => {
 export const fetchPosts = () => Api.get('/products');
 export const createPosts = (url, post) => Api.post(url, post);
 export const updatePosts = (url, post) => Api.patch(url, post);
+export const deletePost = (url) => Api.delete(url);

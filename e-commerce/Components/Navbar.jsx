@@ -12,14 +12,13 @@ import { useRouter } from 'next/router';
 const Navbar = () => {
   const router = useRouter();
   const {showCart, setShowCart, totalQuantities, user, setUser, theme, setTheme} = useStateContext();
- let defaultUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSissgD_ffoqokwXW3qC_-9In_v2iuRr44lqd0gxumxoR5IW1LxXIndugp5WDofIgOEuoI&usqp=CAU"
-
+ let defaultUrl = process.env.NEXT_PUBLIC_URL;
  const handleTheme = (event) => {
   event.target.checked ? setTheme(false) : setTheme(true);
  }
   return (
     <div className='navbar-container'>
-      <p className={theme ? "navdark" : "navlight" }>
+      <p className={theme ? "navdark" : "navlight" } onClick={() => router.push("/")}>
        <span>R</span>
        <span className='logounique'>0</span>
        <span>B</span>

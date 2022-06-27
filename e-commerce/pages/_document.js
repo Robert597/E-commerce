@@ -5,7 +5,7 @@ export default function Document() {
     const {theme} = useStateContext
   return (
     <Html>
-      <Head />
+        <Head/>
       <body className={theme ? "dark" : "light"}>
         <Main />
         <NextScript />

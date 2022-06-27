@@ -3,11 +3,14 @@ import { PaystackButton } from "react-paystack";
 import { useStateContext } from "../Context/datacontext";
 import { useRouter } from "next/router";
 import {toast} from "react-hot-toast";
+import Loading from "../Components/rotateLoader";
 
 const Payment = () => {
   const router = useRouter();
     const {paymentDetail, setPaymentDetail, setSuccessPayment} = useStateContext();
     const [loading, setLoading] = useState(true);
+
+    //PROTECTING ROUTE
     useEffect(() => {
     if(!paymentDetail?.items?.length){
       router.push("/");
@@ -16,7 +19,9 @@ const Payment = () => {
     }
     }, []);
     
-  const publicKey = 'pk_live_1b5845f3a7690307f4c06e0f1770993cb967b68e'
+    //PAYSTACK ID KEY
+  const publicKey = process.env.NEXT_PUBLIC_PAYSTACK;
+   
   const amount = paymentDetail?.Amount
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -44,21 +49,23 @@ const Payment = () => {
   return (
     <div className="App">
       {loading && (
-        <p>loading...</p>
+       <Loading/>
       )}
       {!loading && (
       <div className="container">
         <div className="item">
-          <img />
+          <p className="item-items">Items:</p>
           <div className="item-details">
+            <ul>
             {paymentDetail?.items[0]?.map((name) => (
-                <p>{name}</p>
+                <li>{name}</li>
             ))}
-            <p>Total Amount: &#8358;{amount/100}</p>
+            </ul>
+            <p className="item-details-amount"><span>Total Amount:</span><span> &#8358;{amount/100}</span></p>
           </div>
         </div>
         <div className="checkout-form">
-          <form>
+          <form className="checkout-field">
             <label>Name</label>
             <input
               type="text"

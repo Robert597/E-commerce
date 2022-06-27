@@ -20,7 +20,7 @@ export const DataProvider = ({children}) => {
     const [userLoggedIn, setUserLoggedIn] = useState(false);
     const [user, setUser] = useState({});
 
-
+//FETCH PRODUCTS FROM BACKEND API
     useEffect(() => {
         const fetchData = async () => {
             try{
@@ -37,6 +37,7 @@ export const DataProvider = ({children}) => {
         fetchData();
     }, []);
 
+    //GET DATAS FROM LOCALSTORAGE AFTER EVERY REFRESH
     useEffect(() => {
         const quantity = localStorage.getItem('totalQuantities');
         const price = localStorage.getItem('totalPrice');
@@ -59,6 +60,7 @@ export const DataProvider = ({children}) => {
        
     }, [])
     
+//VALIDATE USER INPUT PASSWORD FOR SECURITY REASONS
  const validatePassword = (psw) => 
 {
 switch (true) {
@@ -79,7 +81,7 @@ switch (true) {
     setErrorMessage("");
 }
 }
-
+//VALIDATE USER EMAIL INPUT WITH REGEX
  const validateEmail = (email) => {
     let result = 
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
@@ -95,6 +97,7 @@ switch (true) {
       }
   };
 
+  //FUNCTION FOR INCREASING AND DECREASING CART QUANTITY
     const incQty = () => {
         setQty((prevqty) => prevqty + 1);
     }
@@ -106,6 +109,8 @@ switch (true) {
         });
 
     }
+
+    //FUNCTION TO BE TRIGGERED WHEN A USER ADDS A NEW PRODUCT TO THEIR CART
     let foundProduct;
     const toggleCartItemQuantity = (id, value) => {
         foundProduct = cartItems.find((item) => item._id === id);
@@ -122,6 +127,8 @@ switch (true) {
          }
     }
     }
+
+    //FUNCTION TO BE TRIGGERED WHEN A USER REMOVES AN ITEM FROM THE CART
     const onRemove = (item) => {
         const newCartItems = cartItems.filter((ite) => ite._id !== item._id);
         setTotalQuantities((prevQuantity)=> prevQuantity - item.quantity);
@@ -131,6 +138,7 @@ switch (true) {
         localStorage.setItem("cart", JSON.stringify(newCartItems));
         setCartItems([...newCartItems]);
     }
+    //FUNCTION WHEN A USER ADDS AN ITEM TO THE CART
     const onAdd =  (product, quantity) => {
         const checkProductInCart = cartItems.find((item) => item._id === product._id);
 
@@ -161,6 +169,7 @@ switch (true) {
    })
    const [successPayment, setSuccessPayment] = useState(false);
     const [product, setProduct] = useState({});
+    //FILTERING PRODUCTS FOR PRODUCT DETAILS PAGE
     const filterProducts = async (id) => {
         let returnProducts = await productDatas.filter(product => product._id === id);
         if(returnProducts){
@@ -175,12 +184,21 @@ switch (true) {
         router.push(`/product/${product._id}`);
     }
     
+
+//LOGOUT FUNCTION, IF A USER WANTS TO LOGOUT
 const logout = () => {
     localStorage.removeItem("profile");
     setUser({});
 }
+
+//FUNCTION FOR WHEN AN ADMIN DELETES PRODUCTS FROM THE CART
+const deleteItem = async (id) => {
+const filteredProducts = productDatas.filter(product => product._id !== id);
+setProductDatas(filteredProducts);
+await api.deletePost(`/products/${id}`);
+}
 const [theme, setTheme] = useState(true);
-    return <DataContext.Provider value={{ loading, productDatas, bannerDatas, setBannerDatas, setProductDatas, setLoading, showCart, cartItems, totalPrice, totalQuantities, qty, setCartItems, setShowCart, setTotalPrice, setTotalQuantities, setQty, incQty, decQty, onAdd, toggleCartItemQuantity, onRemove, setPaymentDetail, paymentDetail, product, setProduct, filterProducts, sendBannerProduct,Error, setError, setErrorMessage, errorMessage, validateEmail, validatePassword,userLoggedIn, setUserLoggedIn, user, setUser,logout, successPayment, setSuccessPayment, theme, setTheme}}>
+    return <DataContext.Provider value={{ loading, productDatas, bannerDatas, setBannerDatas, setProductDatas, setLoading, showCart, cartItems, totalPrice, totalQuantities, qty, setCartItems, setShowCart, setTotalPrice, setTotalQuantities, setQty, incQty, decQty, onAdd, toggleCartItemQuantity, onRemove, setPaymentDetail, paymentDetail, product, setProduct, filterProducts, sendBannerProduct,Error, setError, setErrorMessage, errorMessage, validateEmail, validatePassword,userLoggedIn, setUserLoggedIn, user, setUser,logout, successPayment, setSuccessPayment, theme, setTheme, deleteItem}}>
         {children}
     </DataContext.Provider>
 }

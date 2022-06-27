@@ -26,7 +26,7 @@ const auth = () => {
     const [filename, setFileName] = useState('add profile picture');
     const [imageFile, setImageFile] = useState({});
    const {setError, setErrorMessage,Error, errorMessage, validateEmail, validatePassword, user} = useStateContext();
-const clientId = '426012028678-c6rs4g1jvb46ak8si4stknmfb9v367p3.apps.googleusercontent.com';
+const clientId = process.env.NEXT_PUBLIC_CLIENT_ID;
 useEffect(() => {
     const start = () => {
         gapi.client.init({

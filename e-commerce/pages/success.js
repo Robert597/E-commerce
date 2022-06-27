@@ -4,10 +4,12 @@ import { useRouter } from 'next/router';
 import { BsBagCheckFill } from "react-icons/bs";
 import { useStateContext } from '../Context/datacontext';
 import { runFireworks } from '../lib/util';
+import Loading from '../Components/rotateLoader';
 
 const Success = () => {
     const {setCartItems, setTotalPrice, setTotalQuantities, successPayment, setSuccessPayment, setPaymentDetail} = useStateContext();
     const router = useRouter();
+    //PROTECTING ROUTES
     useEffect(() => {
         if(!successPayment){
             router.push("/");
@@ -29,7 +31,7 @@ const Success = () => {
   return (
     <>
     {!successPayment && (
-        <p>Redirecting...</p>
+        <Loading/>
     )}
     {successPayment && (
     <div className='success-wrapper'>

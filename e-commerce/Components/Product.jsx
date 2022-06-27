@@ -1,20 +1,28 @@
 import React from 'react';
 import Link from 'next/link';
 import { useStateContext } from '../Context/datacontext';
+import {MdOutlineDeleteSweep} from "react-icons/md";
 
 const Product = ({product}) => {
-  const {filterProducts, theme} = useStateContext();
+  const {filterProducts, theme, loading, user, deleteItem} = useStateContext();
+  
   return (
     <div className={theme ? "product-dark" : "product"}>
-      <div onClick={() => {{filterProducts(product?._id)}}}>
-          <div className='product-card'>
+      <div className='product-wrapper'>
+          <div className='product-card'
+          onClick={() => {{filterProducts(product?._id)}}}>
             <img src={product?.image[0]} alt="Picture of the products" 
             width={250}
             height={250}
             className="product-image"/>
             <p className='product-name'>{product?.name}</p>
             <p className='product-price'>&#8358;{product?.price}</p>
+          
           </div>
+          { !loading && user?.result?.frontEndRoles?.includes("Admin") && ( 
+          <MdOutlineDeleteSweep 
+          className='delIcon' onClick={() => deleteItem(product?._id)}/>
+            )}
       </div>
     </div>
   )

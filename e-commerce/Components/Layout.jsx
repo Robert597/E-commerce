@@ -4,27 +4,66 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import { useStateContext } from '../Context/datacontext';
 import calcScrollValue from '../config/scroll';
+import gsap from 'gsap';
+import Loading from './rotateLoader';
 
 const Layout = ({children}) => {
   const {loading, theme} = useStateContext();
+
+  //SPLASH SCREEN ANIMATION WITH GSAP
   useEffect(() => {
       window.onscroll = calcScrollValue;
       window.onload = calcScrollValue;
+
+      const tl = gsap.timeline();
+      tl.to(
+        ".logo-header .logoo", {
+          duration: 1,
+          delay: 1,
+          stagger: .05,
+         opacity: 1,
+          ease: "slow(0.7, 0.7, false)",
+        }
+      )
+      .to(".logo-header .logoo", {
+        duration: 3,
+        stagger: .05,
+        y: -600,
+        opacity: 0,
+        delay: 1,
+        ease: "slow(0.7, 0.7, false)",
+      },1).to(".intro", {
+        position: "absolute",
+        height: 0,
+        duration: 2,
+        delay: 1.5,
+        ease: "slow(0.7, 0.7, false)"
+      }, 1)
   }, [])
   
   return (
     <div className={theme ? "layoutdark" : "layout"}>
       <Head>
         <title>E-Commerce Store</title>
+        <link rel="preload" as="font" href="../Fonts/newyork/NewYork\ PERSONAL\ USE.otf" type="font/otf" crossorigin="anonymous"></link>
+        <link rel="preload" as="font" href="../Fonts/neutral_face/NeutralFace.otf" type="font/otf" crossorigin="anonymous"></link>
     </Head>
     
     
     <div id='progress'>
       <span id="progress-value">&#x1F815;</span>
     </div>
+
+    <div className='intro'>
+      <h1 className='logo-header'>
+        <span className='logoo'>RO</span><span className='logoo'>
+          B.
+          </span>
+      </h1>
+    </div>
   
       {loading && (
-          <div>Loading...</div>
+          <Loading/>
         )}
         {!loading && (
           <>

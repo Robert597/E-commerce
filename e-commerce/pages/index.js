@@ -35,6 +35,7 @@ const Home = () => {
         <Product key={product._id} product={product}/>
       )
       )}
+      
     </div>
 
    <FooterBanner product={productDatas[number]}/>
