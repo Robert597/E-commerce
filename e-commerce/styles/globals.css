@@ -78,7 +78,7 @@ html{
 }
 
 html,
-body, * {
+body{
   padding: 0;
   margin: 0;
   font-family: neutral, sans-serif;
@@ -400,7 +400,6 @@ margin-right: auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 15px;
   margin-top: 20px;
   width: 100%;
 }
