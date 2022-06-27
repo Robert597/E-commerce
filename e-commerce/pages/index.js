@@ -9,6 +9,7 @@ const Home = () => {
   const {productDatas, bannerDatas, user, setUser, logout, theme} = useStateContext();
   const [number, setNumber] = useState(Math.floor(Math.random() * ((productDatas.length-1) - 0 + 1)) + 0);
 
+  //fetching user token from local storage after page is refreshed
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("profile")));
     
@@ -28,7 +29,7 @@ const Home = () => {
     <HeroBanner banner={bannerDatas}/>
     <div className={theme ? "products-heading-dark": "products-heading"}>
       <h2>Best Selling Products</h2>
-      <p>Speakers of many variations</p>
+      <p>quality and durable products</p>
     </div>
     <div className='products-container'>
       {productDatas?.map((product) => (

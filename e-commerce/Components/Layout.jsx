@@ -6,6 +6,8 @@ import { useStateContext } from '../Context/datacontext';
 import calcScrollValue from '../config/scroll';
 import gsap from 'gsap';
 import Loading from './rotateLoader';
+import {BsArrowUp} from "react-icons/bs";
+
 
 const Layout = ({children}) => {
   const {loading, theme} = useStateContext();
@@ -51,7 +53,7 @@ const Layout = ({children}) => {
     
     
     <div id='progress'>
-      <span id="progress-value">&#x1F815;</span>
+      <span id="progress-value"><BsArrowUp/></span>
     </div>
 
     <div className='intro'>

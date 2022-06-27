@@ -690,7 +690,7 @@ text-transform: capitalize;
   width: 600px;
   background-color: white;
   float: right;
-  padding: 40px 10px;
+  padding: 30px 10px;
   position: relative;
   z-index: 100;
 }
@@ -788,7 +788,7 @@ text-transform: capitalize;
 .product-container{
   margin-top: 15px;
   overflow: auto;
-max-height: 70vh;
+max-height: 60vh;
 padding: 20px 10px;
 }
 .product1{
@@ -849,11 +849,8 @@ color: #2196f3;
   border: none;
 }
 .cart-bottom{
-  position: absolute;
-  bottom: 12px;
-  right: 5px;
 width: 100%;
-padding: 30px 65px;
+padding: 10px 65px;
 
 }
 
@@ -869,7 +866,6 @@ padding: 30px 65px;
   border: none;
   font-size: 20px;
   margin-top: 10px;
-  margin-top: 40px;
   text-transform: uppercase;
   background-color: #f02d34;
   color: #fff;
@@ -883,8 +879,7 @@ padding: 30px 65px;
 }
 .product-detail-container{
   display: flex;
- gap: 40px;
- margin: 40px;
+  gap: 40px;
  margin-top: 60px;
  color: #324d67;
 transition: all 0.3s linear;
@@ -1065,7 +1060,7 @@ padding: 6px;
 }
 
 .maylike-products-wrapper{
-  margin-top: 120px;
+  margin-top: 30px;
 }
 .maylike-products-wrapper h2{
   text-align: center;
@@ -1760,7 +1755,7 @@ form{
     text-align: center;
     padding: 15px 0;
   }
-  .product .cart-product-image{
+  .product1 .cart-product-image{
     width: 25%;
     height: 25%;
   }
@@ -1873,9 +1868,10 @@ form{
   }
   .buttons .add-to-cart{
     margin: 40px 0;
+    width: 45%;
   }
   .buttons .buy-now{
-  
+    width: 45%;
     margin: 40px 0;
     
   }
