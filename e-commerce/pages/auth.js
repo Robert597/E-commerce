@@ -9,7 +9,6 @@ import {FaPlus} from "react-icons/fa";
 import { getDownloadURL, ref,  uploadBytesResumable } from 'firebase/storage';
 import {storage} from "../firebase";
 import gsap from 'gsap';
-import {gapi} from 'gapi-script';
 import {toast} from 'react-hot-toast';
 
 const Auth = () => {
@@ -34,6 +33,8 @@ const clientId = process.env.NEXT_PUBLIC_CLIENT_ID;
 
 //loading google login script
 useEffect(() => {
+    const handleClick = async () => {
+    const gapi = await import('gapi-script').then((pack) => pack.gapi);
     const start = () => {
         gapi.client.init({
             clientId: clientId,
@@ -41,6 +42,8 @@ useEffect(() => {
         })
     }
     gapi.load('client:auth2', start);
+}
+handleClick();
 }, [])
 
 //rotate loader animation
