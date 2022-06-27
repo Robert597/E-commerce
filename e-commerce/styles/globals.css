@@ -917,9 +917,7 @@ transition: all 0.3s linear;
   display: flex;
   gap: 10px;
   margin-top: 20px;
-  padding: 5px;
-  width: 100%;
-  justify-content: space-between;
+  padding: 10px;
 }
 .small-image{
   border-radius: 8px;
@@ -928,6 +926,7 @@ transition: all 0.3s linear;
   height: 70px;
   cursor: pointer;
   transition: all 0.3s linear;
+  margin: 10px;
 }
 .layoutdark .small-image{
   background-color: #9c27b0;
@@ -992,21 +991,21 @@ transition: all 0.3s linear;
 }
 .product-detail-desc .quantity{
   display: flex;
-  gap: 20px;
   margin-top: 10px ;
   align-items: center;
 }
 .product-detail-desc .quantity h3{
   font-family: neutral;
+  margin: 10px;
 }
 .product-detail-desc .buttons{
   display: flex;
-  gap: 30px;
+  padding: 10px;
 }
 .buttons .add-to-cart{
   padding: 10px 20px;
   border: 1px solid #f02d34 ;
-  margin-top: 40px;
+  margin: 40px 10px 10px 10px;
   font-size: 18px;
   font-weight: 500;
   background-color: white;
@@ -1031,7 +1030,7 @@ transition: all 0.3s linear;
   background-color: #f02d34;
   color: white;
   border: none;
-  margin-top: 40px;
+  margin: 40px 10px 10px 10px;
   font-size: 18px;
   font-weight: 500;
   cursor: pointer;
@@ -1858,6 +1857,31 @@ form{
   
   }
 }
+@media all and (max-width: 450px){
+  .small-images-container{
+    display: flex;
+    margin-top: 20px;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .small-image{
+    margin: 0;
+  }
+  .product-detail-desc .buttons{
+    display: flex;
+    padding: 5px;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .buttons .add-to-cart{
+    margin: 40px 0;
+  }
+  .buttons .buy-now{
+  
+    margin: 40px 0;
+    
+  }
+}
 @media all and (max-width: 430px){
   .cart-container{
     width: 100vw;
@@ -1865,6 +1889,9 @@ form{
   }
   .navdark span, .navlight span{
     font-size: 24px;
+  }
+  .hero-banner-container h1, .hero-banner-container-dark h1{
+    font-size: 3em;
   }
 }
 @media all and (max-width: 380px){
