@@ -11,7 +11,10 @@ const Form = () => {
     const [banner, setBanner] = useState(false);
     const [imageFile, setImageFile] = useState([]); 
     const [imageFiles, setImageFiles] = useState([]); 
+
+    //fetching our data from contextApi
     const {productDatas, setProductDatas, bannerDatas, setBannerDatas, loading, user} = useStateContext();
+
     const[imageUrl, setImageUrl] = useState(bannerDatas[0]?.image);
     const [productData, setProductData] = useState(
       {
@@ -34,7 +37,7 @@ const Form = () => {
       }
     );
    
-    
+    //prefilling the bannerForm with previous values
     useEffect(() => {
       if(!loading){
         setBannerData(
@@ -51,9 +54,9 @@ const Form = () => {
           }
         )
       }
-    }, [loading])
+    }, [loading]);
     
-
+//function for adding new product
 const handleProductSubmit = async ( event) => {
   event.preventDefault();
   try{
@@ -80,6 +83,7 @@ const handleProductSubmit = async ( event) => {
   }
 }
 
+//function for editing footer or hero banner
 const handleBannerSubmit = async (event) => {
   event.preventDefault();
   try{

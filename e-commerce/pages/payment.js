@@ -57,8 +57,8 @@ const Payment = () => {
           <p className="item-items">Items:</p>
           <div className="item-details">
             <ul>
-            {paymentDetail?.items[0]?.map((name) => (
-                <li>{name}</li>
+            {paymentDetail?.items[0]?.map((name, i) => (
+                <li key={i}>{name}</li>
             ))}
             </ul>
             <p className="item-details-amount"><span>Total Amount:</span><span> &#8358;{amount/100}</span></p>

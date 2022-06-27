@@ -12,7 +12,7 @@ import gsap from 'gsap';
 import {gapi} from 'gapi-script';
 import {toast} from 'react-hot-toast';
 
-const auth = () => {
+const Auth = () => {
     const router = useRouter();
     const [isSignup, setIsSignup] = useState(false);
     const[showPassword, setShowPassword] = useState(false);
@@ -25,8 +25,14 @@ const auth = () => {
     });
     const [filename, setFileName] = useState('add profile picture');
     const [imageFile, setImageFile] = useState({});
+
+    //fetching data from contextApi
    const {setError, setErrorMessage,Error, errorMessage, validateEmail, validatePassword, user} = useStateContext();
+
+//google login clientId
 const clientId = process.env.NEXT_PUBLIC_CLIENT_ID;
+
+//loading google login script
 useEffect(() => {
     const start = () => {
         gapi.client.init({
@@ -37,7 +43,7 @@ useEffect(() => {
     gapi.load('client:auth2', start);
 }, [])
 
-
+//rotate loader animation
    useEffect(() => {
     let tl = gsap.timeline({paused: true});
     tl.to(".loader3fill", {
@@ -64,6 +70,7 @@ if(authLoader){
 }
    }, [authLoader])
    
+   //on form submit function
     const handleSubmit = async(event) => {
         event.preventDefault();
         try{
@@ -106,12 +113,13 @@ if(authLoader){
         setUserData({...userData, [event.target.name]: event.target.value});
     }
     
+    //function for if users successfully login with google login
     const googleSuccess = async (res) => {
         const result = await res?.profileObj;
         const token = await res?.tokenId
-        console.log("yes");
+        
  try{
-    console.log("yess");
+    //storing user token in localstorage
      localStorage.setItem('profile', JSON.stringify({result, token})); 
     router.push("/");
     toast.success("successfully logged in");
@@ -222,4 +230,4 @@ console.log("yes no");
   )
 }
 
-export default auth
+export default Auth

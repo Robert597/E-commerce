@@ -8,6 +8,22 @@
 }
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&display=swap');
 
+::-webkit-scrollbar{
+  width: .5em;
+}
+::-webkit-scrollbar-track{
+  background-color: #0f0f0f;
+  margin-block: .5em;
+  border-radius: 100vw;
+}
+
+::-webkit-scrollbar-thumb{
+  background-color: #fff;
+  border-radius: 100vw;
+  cursor: pointer;
+}
+
+
 html{
   scroll-behavior: smooth;
   width: 100vw;
