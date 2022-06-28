@@ -8,9 +8,9 @@ const Footer = () => {
     <div className={theme ? "footer-container-dark" : "footer-container"}>
         <p>&copy;2022, Robert Store. All Rights Reserved.</p>
         <p className='icons'>
-          <AiFillInstagram/>
-          <AiOutlineTwitter/>
-          <AiFillFacebook/>
+          <AiFillInstagram className='innerIcon'/>
+          <AiOutlineTwitter className='innerIcon'/>
+          <AiFillFacebook className='innerIcon'/>
         </p>
     </div>
   )

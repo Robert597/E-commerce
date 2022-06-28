@@ -5,6 +5,9 @@ import * as Api from "../API/index"
 import { useStateContext } from '../Context/datacontext';
 import { useRouter } from 'next/router';
 import Link from "next/link";
+import {RiLoader3Fill} from 'react-icons/ri'; 
+import gsap from 'gsap';
+import {toast} from 'react-hot-toast';
 
 const Form = () => {
    const router = useRouter();
@@ -56,10 +59,38 @@ const Form = () => {
       }
     }, [loading]);
     
+  //form loader animation
+  const [formLoader, setFormLoader] = useState(false);
+  useEffect(() => {
+    let tl = gsap.timeline({paused: true});
+    tl.to(".loader3fill", {
+        rotate: 360,
+        scale: 1.2,
+        duration: 2,
+        ease: "Power2.inOut",
+        repeat: -1
+    });
+if(formLoader){
+    gsap.to(".loader3fill", {
+        autoAlpha: 1,
+        ease: "power2.inOut",
+        duration: .5
+    });
+    tl.play();
+}else{
+    gsap.to(".loader3fill", {
+        autoAlpha: 0,
+        ease: "power2.inOut",
+        duration: .5
+    });
+    tl.pause();
+}
+   }, [formLoader])
 //function for adding new product
 const handleProductSubmit = async ( event) => {
   event.preventDefault();
   try{
+    setFormLoader(true);
     const image = [];
     for(let i = 0; i < imageFile.length; i++){
       const storageRef = ref(storage, `/files/${imageFile[i].name}`);
@@ -80,6 +111,8 @@ const handleProductSubmit = async ( event) => {
     router.push('/');
   }catch(err){
     console.log(err.response.data);
+  }finally{
+    setFormLoader(false);
   }
 }
 
@@ -87,6 +120,7 @@ const handleProductSubmit = async ( event) => {
 const handleBannerSubmit = async (event) => {
   event.preventDefault();
   try{
+    setFormLoader(true)
     if(imageFiles){
       const image = [];
       for(let i = 0; i < imageFiles.length; i++){
@@ -119,6 +153,8 @@ const handleBannerSubmit = async (event) => {
 
 }catch(err){
     console.log(err);
+  }finally{
+    setFormLoader(false);
   }
 }
 
@@ -151,6 +187,7 @@ const handleBannerSubmit = async (event) => {
                     value={productData.details}
                      onChange={ (e) => setProductData({...productData,details : e.target.value})}
                      required></textarea>
+                       <div className='loaderContainer'><RiLoader3Fill className='loader3fill'/></div>
                     <button type='submit'>Submit</button>
                     <p>Edit Banner<span onClick={() => {setBanner(true)}} style={{cursor: "pointer"}}>Click Here</span></p>
                 </form>
@@ -211,6 +248,7 @@ const handleBannerSubmit = async (event) => {
              <input type="file"
                      onChange={(e) => setImageFiles(e.target.files)} multiple
                    />
+                     <div className='loaderContainer'><RiLoader3Fill className='loader3fill'/></div>
                     <button type="submit">Submit</button>
                     <p>Add a new Product <span onClick={() => {setBanner(false)}} style={{cursor: "pointer"}}>Click Here</span></p>
           </form>

@@ -11,8 +11,14 @@ import { useRouter } from 'next/router';
 
 const Navbar = () => {
   const router = useRouter();
+
+  //FETCHING VARIABLES FROM CONTEXTAPI
   const {showCart, setShowCart, totalQuantities, user, setUser, theme, setTheme} = useStateContext();
- let defaultUrl = process.env.NEXT_PUBLIC_URL;
+
+  //DEFAULT PROFILE PICTURE
+ let defaultUrl =  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSissgD_ffoqokwXW3qC_-9In_v2iuRr44lqd0gxumxoR5IW1LxXIndugp5WDofIgOEuoI&usqp=CAU"
+
+ //DARK AND LIGHT MODE TOGGLE
  const handleTheme = (event) => {
   event.target.checked ? setTheme(false) : setTheme(true);
  }
