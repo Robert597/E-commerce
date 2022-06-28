@@ -13,7 +13,7 @@ const FooterBanner = ({product}) => {
           <p>{bannerDatas[0]?.discount}% off</p>
           <h3>{bannerDatas[0]?.footerLarge}</h3>
           <h3>{bannerDatas[0]?.footerlarge}</h3>
-          <p>{bannerDatas[0]?.saleTime}% off</p>
+          <p>{bannerDatas[0]?.saleTime}</p>
         </div>
         <div className='right'>
           <div>
