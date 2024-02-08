@@ -7,7 +7,7 @@ import { runFireworks } from '../lib/util';
 import Loading from '../Components/rotateLoader';
 
 const Success = () => {
-    const {setCartItems, setTotalPrice, setTotalQuantities, successPayment, setSuccessPayment, setPaymentDetail} = useStateContext();
+    const {successPayment, setSuccessPayment, setPaymentDetail} = useStateContext();
     const router = useRouter();
     //PROTECTING ROUTES
     useEffect(() => {
@@ -16,13 +16,8 @@ const Success = () => {
         }else{
         let items = ["cart", "product", "totalQuantities", "totalPrice"]
         items.forEach(k => localStorage.removeItem(k));
-        setCartItems([]);
-        setTotalPrice(0);
-        setTotalQuantities(0);
         setPaymentDetail(
             {
-              Amount: 0,
-              item: []
              }
           );
         runFireworks();
@@ -36,21 +31,14 @@ const Success = () => {
     {successPayment && (
     <div className='success-wrapper'>
         <div className='success'>
-            <p className='icon'>
-                <BsBagCheckFill/>
-            </p>
-            <h2>Thank you for your order!</h2>
-            <p className='email-msg'>Check your email inbox for the receipt.</p>
+    <h2>Your payment is successful.</h2>
             <p className='description'>
-                if you have any questions, please email.
-                <a className='email' href='mailto:robertseun1@gmail.com'>
-                    robertseun1@gmail.com
-                </a>
-                </p>
+               Thank you for your payment, you can always continue shopping with Henry's store.
+            </p>
                 <Link href="/">
                     <button type="button" width="300px" className="btn" onClick={() => setSuccessPayment(false)}>
                         Continue Shopping
-                        </button>
+                    </button>
                 </Link>
         </div>
     </div>

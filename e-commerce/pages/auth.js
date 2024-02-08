@@ -1,13 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {MdVisibility, MdVisibilityOff, MdLockOutline} from "react-icons/md";
-import { GoogleLogin } from 'react-google-login';
-import {RiLoader3Fill, RiGoogleFill} from 'react-icons/ri'; 
+import {RiLoader3Fill} from 'react-icons/ri'; 
 import { useStateContext } from '../Context/datacontext';
 import { createPosts } from '../API';
 import { useRouter } from 'next/router';
-import {FaPlus} from "react-icons/fa";
-import { getDownloadURL, ref,  uploadBytesResumable } from 'firebase/storage';
-import {storage} from "../firebase";
 import gsap from 'gsap';
 import {toast} from 'react-hot-toast';
 
@@ -22,29 +18,9 @@ const Auth = () => {
         email: "",
         password: ""
     });
-    const [filename, setFileName] = useState('add profile picture');
-    const [imageFile, setImageFile] = useState({});
-
+ 
     //fetching data from contextApi
-   const {setError, setErrorMessage,Error, errorMessage, validateEmail, validatePassword, user} = useStateContext();
-
-//google login clientId
-const clientId = process.env.NEXT_PUBLIC_CLIENT_ID;
-
-//loading google login script
-useEffect(() => {
-    const handleClick = async () => {
-    const gapi = await import('gapi-script').then((pack) => pack.gapi);
-    const start = () => {
-        gapi.client.init({
-            clientId: clientId,
-            scope: ""
-        })
-    }
-    gapi.load('client:auth2', start);
-}
-handleClick();
-}, [])
+   const {setError, setErrorMessage,Error, errorMessage, validateEmail, validatePassword, setCustomer} = useStateContext();
 
 //rotate loader animation
    useEffect(() => {
@@ -79,23 +55,14 @@ if(authLoader){
         try{
             setAuthLoader(true);
             if(isSignup){
-                if(imageFile.name){
-                    
-                    const storageRef = ref(storage, `/files/${imageFile.name}`);
-                    const uploadTask = await uploadBytesResumable(storageRef, imageFile);
-                    const url = await getDownloadURL(storageRef);
-                    console.log(url);
+                
                     const data = await createPosts('/auth/signup', {
-                        ...userData, image: url
+                        ...userData
                     });
-                    localStorage.setItem('profile', JSON.stringify(data?.data));
+                    console.log(data);
                     
-                }else{
-                    const data = await createPosts('/auth/signup', userData);
                     localStorage.setItem('profile', JSON.stringify(data?.data));
-                }
-               
-            }
+               }
             if(!isSignup){
                 const data = await createPosts('/auth/signin', userData);
                 localStorage.setItem('profile', JSON.stringify(data?.data));
@@ -116,24 +83,7 @@ if(authLoader){
         setUserData({...userData, [event.target.name]: event.target.value});
     }
     
-    //function for if users successfully login with google login
-    const googleSuccess = async (res) => {
-        const result = await res?.profileObj;
-        const token = await res?.tokenId
-        
- try{
-    //storing user token in localstorage
-     localStorage.setItem('profile', JSON.stringify({result, token})); 
-    router.push("/");
-    toast.success("successfully logged in");
-}catch(err){
-console.log(err);
-console.log("yes no");
-    }
-    }
-    const googleFailure = (error) => {
-        console.log(error.details);
-    }
+    
 
 
   return (
@@ -165,14 +115,6 @@ console.log("yes no");
                             onChange={(e) => handleChange(e)}/>
                              <label htmlFor="lastName" className='authLabel'>LastName</label>
                             </div>
-
-             <div className='filePlaceholder'>
-              <p>{filename}</p>
-            <input type="file"placeholder='image' name='upload' required id='upload' onChange={(e) => {
-            setImageFile(e.target.files[0]);
-            setFileName(e.target.files[0].name)}} style={{display: "none"}}/>
-            <div className='uploadIconCont'><FaPlus className='uploadIcon' onClick={() => document.getElementById('upload').click()}/></div>
-            </div>
                             </>
                         )
                     }
@@ -205,23 +147,8 @@ console.log("yes no");
                 </div>
                 <button className='authBtn' type='submit'>{isSignup ? "Sign Up" : "Login"}</button>
                 
-               <div type='button' className='googleContainer' id="googleContainer">
-                <GoogleLogin 
-                clientId= {clientId}
-               
-                render={(renderProps) => (
-<button className='googleAuthBtn' onClick={renderProps.onClick} disabled={renderProps.disabled}
-><RiGoogleFill className='googleIcon'/> Google Login</button>
-                )}
-                onSuccess={googleSuccess}
-                onFailure={googleFailure}
-                cookiePolicy={'single_host_origin'}
-                />
-                </div>
-                
-                
               
-                <div className='authAsk'>
+        <div className='authAsk'>
                     <button className="authAskBtn" onClick={() => setIsSignup(!isSignup)}>
                         {isSignup ? 'Already have an account? Login': "Don't have an account? Sign Up"}
                     </button>

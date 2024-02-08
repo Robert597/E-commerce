@@ -25,10 +25,11 @@ const Navbar = () => {
   return (
     <div className='navbar-container'>
       <p className={theme ? "navdark" : "navlight" } onClick={() => router.push("/")}>
+       <span>H</span>
+       <span>E</span>
+       <span className='logounique'>N</span>
        <span>R</span>
-       <span className='logounique'>0</span>
-       <span>B</span>
-       <span>.</span>
+       <span>Y</span>
       </p>
 
   
@@ -38,8 +39,8 @@ const Navbar = () => {
 
 
 
-<button type="button" className={theme ? "cart-add-dark": "cart-add-light"} onClick={() => router.push("/Form")}>
-<AiOutlineAppstoreAdd />
+<button type="button" className={theme ? "home-add-dark": "home-add-light"} onClick={() => router.push("/")}>
+Home
 </button>
          
 

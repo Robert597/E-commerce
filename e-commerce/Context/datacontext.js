@@ -3,15 +3,17 @@ import * as api from '../API';
 const DataContext = createContext({});
 import {toast} from 'react-hot-toast';
 import { useRouter } from 'next/router';
+import {products as productDatas} from "../Utils/product1.js";
 
 
 export const DataProvider = ({children}) => {
     const router = useRouter();
     const [Error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [productDatas, setProductDatas] = useState([]);
+    const [customer, setCustomer] = useState({});
+    //const [productDatas, setProductDatas] = useState([]);
     const [bannerDatas, setBannerDatas] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [showCart, setShowCart] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
@@ -21,7 +23,7 @@ export const DataProvider = ({children}) => {
     const [user, setUser] = useState({});
 
 //FETCH PRODUCTS FROM BACKEND API
-    useEffect(() => {
+   /* useEffect(() => {
         const fetchData = async () => {
             try{
                 setLoading(true);
@@ -36,7 +38,7 @@ export const DataProvider = ({children}) => {
         }
         fetchData();
     }, []);
-
+*/
     //GET DATAS FROM LOCALSTORAGE AFTER EVERY REFRESH
     useEffect(() => {
         const quantity = localStorage.getItem('totalQuantities');
@@ -144,7 +146,7 @@ switch (true) {
 
         setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity);
         localStorage.setItem("totalPrice", totalPrice +  product.price * quantity);
-        setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
+        setTotalQuantities ((prevTotalQuantities) => prevTotalQuantities + quantity);
         localStorage.setItem("totalQuantities",totalQuantities + quantity);
         if(checkProductInCart){
             const updateCartItems = cartItems.map((item) => {
@@ -164,8 +166,6 @@ switch (true) {
     }
 
    const [paymentDetail , setPaymentDetail] = useState({
-    Amount: 0,
-    item: []
    })
    const [successPayment, setSuccessPayment] = useState(false);
     const [product, setProduct] = useState({});
@@ -197,8 +197,8 @@ const filteredProducts = productDatas.filter(product => product._id !== id);
 setProductDatas(filteredProducts);
 await api.deletePost(`/products/${id}`);
 }
-const [theme, setTheme] = useState(true);
-    return <DataContext.Provider value={{ loading, productDatas, bannerDatas, setBannerDatas, setProductDatas, setLoading, showCart, cartItems, totalPrice, totalQuantities, qty, setCartItems, setShowCart, setTotalPrice, setTotalQuantities, setQty, incQty, decQty, onAdd, toggleCartItemQuantity, onRemove, setPaymentDetail, paymentDetail, product, setProduct, filterProducts, sendBannerProduct,Error, setError, setErrorMessage, errorMessage, validateEmail, validatePassword,userLoggedIn, setUserLoggedIn, user, setUser,logout, successPayment, setSuccessPayment, theme, setTheme, deleteItem}}>
+const [theme, setTheme] = useState(false);
+    return <DataContext.Provider value={{ loading, productDatas, bannerDatas, setBannerDatas, setLoading, showCart, cartItems, totalPrice, totalQuantities, qty, setCartItems, setShowCart, setTotalPrice, setTotalQuantities, setQty, incQty, decQty, onAdd, customer, setCustomer, toggleCartItemQuantity, onRemove, setPaymentDetail, paymentDetail, product, setProduct, filterProducts, sendBannerProduct,Error, setError, setErrorMessage, errorMessage, validateEmail, validatePassword,userLoggedIn, setUserLoggedIn, user, setUser,logout, successPayment, setSuccessPayment, theme, setTheme, deleteItem}}>
         {children}
     </DataContext.Provider>
 }

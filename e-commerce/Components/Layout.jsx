@@ -47,8 +47,8 @@ const Layout = ({children}) => {
     <div className={theme ? "layoutdark" : "layout"}>
       <Head>
         <title>E-Commerce Store</title>
-        <link rel="preload" as="font" href="../Fonts/newyork/NewYork\ PERSONAL\ USE.otf" type="font/otf" crossorigin="anonymous"></link>
-        <link rel="preload" as="font" href="../Fonts/neutral_face/NeutralFace.otf" type="font/otf" crossorigin="anonymous"></link>
+        <link rel="preload" as="font" href="../Fonts/newyork/NewYork\ PERSONAL\ USE.otf" type="font/otf" crossOrigin="anonymous"></link>
+        <link rel="preload" as="font" href="../Fonts/neutral_face/NeutralFace.otf" type="font/otf" crossOrigin="anonymous"></link>
     </Head>
     
     
@@ -58,8 +58,8 @@ const Layout = ({children}) => {
 
     <div className='intro'>
       <h1 className='logo-header'>
-        <span className='logoo'>RO</span><span className='logoo'>
-          B.
+        <span className='logoo'>HEN</span><span className='logoo'>
+          RY.
           </span>
       </h1>
     </div>

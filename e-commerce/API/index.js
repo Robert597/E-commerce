@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const Api = Axios.create({ baseURL: "https://rob-commerce.herokuapp.com"});
+const Api = Axios.create({ baseURL: "http://localhost:4000"});
 Api.interceptors.request.use((req) => {
     if(localStorage.getItem('profile')){
         req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;

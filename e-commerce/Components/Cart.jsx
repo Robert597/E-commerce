@@ -1,6 +1,6 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import Link from 'next/link';
-import {AiOutlineMinus, AiOutlinePlus, AiOutlineLeft, AiOutlineShopping} from 'react-icons/ai';
+import { AiOutlineLeft, AiOutlineShopping} from 'react-icons/ai';
 import {TiDeleteOutline} from "react-icons/ti";
 import { useRouter } from 'next/router';
 import { useStateContext } from '../Context/datacontext';
@@ -8,7 +8,7 @@ import {FiLogOut, FiLogIn} from 'react-icons/fi';
 
 const Cart = () => {
     const router = useRouter();
-    const {totalPrice, totalQuantities, cartItems, setShowCart, setPaymentDetail, toggleCartItemQuantity, onRemove, user, logout, theme} = useStateContext();
+    const {totalQuantities, cartItems, setShowCart, setPaymentDetail,  onRemove, user, logout} = useStateContext();
 
   return (
     <div className="cart-wrapper">
@@ -45,17 +45,23 @@ const Cart = () => {
             <div className="item-desc">
               <div className="flex top">
                 <h5>{item.name}</h5>
-                <h4>&#8358;{item.price}</h4>
+                <h4>&#36;{item.price}</h4>
               </div>
               <div className="flex bottom">
                 <div>
-                <p className="quantity-desc">
-                  <span className="minus" onClick={() => toggleCartItemQuantity(item._id, 'desc') }>
-                  <AiOutlineMinus />
-                  </span>
-                  <span className="num">{item.quantity}</span>
-                  <span className="plus" onClick={() => toggleCartItemQuantity(item._id, 'inc') }><AiOutlinePlus /></span>
-                </p>
+                <button type="button" className="btn" onClick={()=> {
+              if(!user?.result){
+                alert("Login to pay for products")
+                router.push("/auth");
+              setShowCart(false);
+              }else{
+              setPaymentDetail(item);
+              router.push("/StripeContainer");
+              setShowCart(false);
+            }
+            }}>
+              subscribe
+            </button>
                 </div>
                 <button
                   type="button"
@@ -69,28 +75,7 @@ const Cart = () => {
           </div>
         ))}
       </div>
-      {cartItems.length >= 1 && (
-        <div className="cart-bottom">
-          <div className="total">
-            <h3>Subtotal:</h3>
-            <h3>&#8358;{totalPrice}</h3>
-          </div>
-          <div className="btn-container">
-            <button type="button" className="btn" onClick={()=> {
-              setPaymentDetail({
-                Amount: totalPrice * 100,
-                items: [
-                  cartItems.map((item) => { return item.name })
-                ]
-              });
-              router.push("/payment");
-              setShowCart(false);
-            }}>
-              click to pay
-            </button>
-          </div>
-        </div>
-      )}
+      
       <button
               type="button"
               className="logBtn"

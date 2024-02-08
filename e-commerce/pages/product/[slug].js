@@ -6,8 +6,8 @@ import Product from '../../Components/Product';
 
  
 const ProductDetails = () => {
-    const router = useRouter();
-    const {productDatas, setPaymentDetail, decQty, incQty, qty, onAdd, product} = useStateContext();
+    const router = useRouter();  
+    const {productDatas, setPaymentDetail, qty, onAdd, product, user} = useStateContext();
     const[index, setIndex] = useState(0);
   
   return (
@@ -49,35 +49,22 @@ const ProductDetails = () => {
                 <h4>Details: </h4>
                 <p>{product.details}</p>
                 <p className='price'>
-                &#8358;{product.price}
+                &#36;{product.price}
                 </p>
-                <div className='quantity'>
-                    <h3>Quantity: </h3>
-                    <p className='quantity-desc'>
-                        <span className='minus' onClick={decQty}>
-                            <AiOutlineMinus/>
-                        </span>
-                        <span className='num'>
-                          {qty}
-                        </span>
-                        <span className='plus' onClick={incQty}>
-                            <AiOutlinePlus/>
-                        </span>
-                    </p>
-                </div>
+                
                 <div className='buttons'>
                     <button type='button' className='add-to-cart'
                     onClick={() => onAdd(product, qty)}>Add to cart</button>
                     <button type='button' className='buy-now'
                     onClick={() =>{
-                        setPaymentDetail(
-                            {
-                                Amount: product.price * 100 * qty,
-                                items:[[product.name]]
-                            }
-                        )
-                        router.push("/payment");
-                    }}>Buy Now</button>
+                        if(!user?.result){
+                            alert("Login to pay for products")
+                            router.push("/auth");
+                          }else{
+                          setPaymentDetail(product);
+                          router.push("/StripeContainer");
+                        }
+                    }}>Subscribe Now</button>
                 </div>
             </div>
 

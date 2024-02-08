@@ -1,28 +1,28 @@
 import React from 'react';
 import { useStateContext } from '../Context/datacontext';
-
-const HeroBanner = ({banner}) => {
-   const {sendBannerProduct, theme} = useStateContext();
+const HeroBanner = () => {
+    const {theme} = useStateContext();
   return (
     <div className={theme ? "hero-banner-container-dark": "hero-banner-container"}>
         <div>
             <p className='beats-solo'>
-            {banner[0]?.name} 
+            Beats Solo
             </p>
-            <h3>{banner[0]?.Large}</h3>
-            <h1>{banner[0]?.small}</h1>
+            <h3>Wireless</h3>
+            <h1>Headphones</h1>
+            
         
-                   <img src={banner[0]?.image[0]}    alt="Picture of the products" 
+                   <img src="/assets/headphones_a_2.webp" alt="Picture of the products" 
                    className='hero-banner-image'/>
       
            
             <div>
-                <div onClick={() => {sendBannerProduct(banner[0])}}>
+                <div>
                     <button type='button'>Buy Now </button>
                 </div>
                 <div className='desc'>
                     <h5>Description</h5>
-                    <p>{banner[0]?.details} </p> 
+                    <p>The game here begins with immortal 1000D gaming headphones, dont just play the game, feel it, live it and own it. level up your audio game. </p> 
                 </div>
             </div>
         </div>
