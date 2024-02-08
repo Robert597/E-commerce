@@ -15,7 +15,7 @@ const Home = () => {
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("profile")));
     
-    console.log(user);
+   
     const getToken = JSON.parse(localStorage.getItem("profile"));
     const token = getToken?.token;
 

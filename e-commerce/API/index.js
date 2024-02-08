@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const Api = Axios.create({ baseURL: "http://localhost:4000"});
+const Api = Axios.create({ baseURL: "https://cute-jade-coral-tutu.cyclic.app/"});
 Api.interceptors.request.use((req) => {
     if(localStorage.getItem('profile')){
         req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;

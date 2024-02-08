@@ -10,7 +10,7 @@ const PaymentForm = () => {
     const stripe = useStripe();
     const elements = useElements();
     const router = useRouter();
-    const {user, paymentDetail, setSuccessPayment} = useStateContext();
+    const {user, paymentDetail, setSuccessPayment, product} = useStateContext();
 
     const [selected, setSelected] = useState("Legal");
     const [eligibility, setEligibility] = useState(false);
@@ -43,8 +43,8 @@ const PaymentForm = () => {
              try{
           setLoading(true);
               // Create the subscription
-              const res = await axios.post('http://localhost:4000/create-subscription', {
-                  priceId: 'price_1OVGwdKJgU8JtmfplJRJE819', 
+              const res = await axios.post('https://cute-jade-coral-tutu.cyclic.app/create-subscription', {
+                  priceId: product?.priceId, 
                   customerId: user?.result?.customerId
               })
               
