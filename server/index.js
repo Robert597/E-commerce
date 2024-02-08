@@ -22,6 +22,10 @@ app.use(cors());
 
 app.use('/auth', authRouter);
 
+app.get("/", (req, res) => {
+  res.send("SERVER RUNNING")
+});
+
 /*app.post("/subscription", cors(), async (req, res) => {
     let {customer, id} = req.body;
     try{
