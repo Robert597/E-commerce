@@ -53,7 +53,7 @@ app.post('/create-subscription', async (req, res) => {
 
   try {
     const subscription = await stripe_handler.subscriptions.create({
-      customer: customerId,
+      customer: customerId.id,
       items: [{
         price: priceId
       }],
