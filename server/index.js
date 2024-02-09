@@ -70,7 +70,7 @@ app.post('/create-subscription', async (req, res) => {
       expand: ['latest_invoice.payment_intent'],
      
     });
-
+console.log(subscription);
   const paymentIntent = await stripe_handler.paymentIntents.retrieve(
     subscription.latest_invoice.payment_intent.id, {
       expand: ['payment_method']
