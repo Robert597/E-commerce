@@ -34,9 +34,10 @@ const authSchema =  new Schema({
         required: true,
         default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSissgD_ffoqokwXW3qC_-9In_v2iuRr44lqd0gxumxoR5IW1LxXIndugp5WDofIgOEuoI&usqp=CAU"
     },
-    customerId: {
-        type: String,
-        required: true,
+    customer: {
+        id: String,
+        name: String
+
     }
 })
 export const authModel = mongoose.model('User', authSchema);

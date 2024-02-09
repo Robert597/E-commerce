@@ -44,7 +44,10 @@ const result = await authModel.create({
     },
     email,
     password: hashPwd,
-    customer
+    customer: {
+        id: customer.id,
+        name: customer.name
+    }
 })
  //get roles of user
  const roles = Object.values(result.roles);
