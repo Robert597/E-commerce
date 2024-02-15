@@ -8,7 +8,7 @@ import connectDB from "./connectDB.js";
 import authRouter from './Routes/auth.js';
 const app = express();
 dotenv.config();
-export const stripe_handler = stripe(process.env.STRIPE_SECRET_TEST);
+export const stripe_handler = stripe("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");
 
 
 
@@ -50,7 +50,7 @@ app.get("/", (req, res) => {
 
 app.post('/create-subscription', async (req, res) => {
   const {priceId, customerId} = req.body;
-
+console.log(priceId, customerId);
   try {
     const subscription = await stripe_handler.subscriptions.create({
       customer: customerId.id,
